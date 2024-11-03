@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    
+    justify-content: center;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    /* background-image: url('../images/Desk_bg_new.webp');  */
+    background-size: cover; /* Cover the entire area */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent repeating */
+    /* Maintain existing properties */
+    background-color: #e9f5e9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.7); 
+    border-radius: 40px;
+    border:2px solid #2AB157;
+    padding: 40px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 600px; 
+    min-height: 450px;
+}
+h1 {
+    color: #124C25; /* Header color */
+    margin-bottom: 20px;
+    text-align: center;
+    text-decoration: underline;
+}
+
+input {
+    width: 100%; 
+    min-height: 60px;/* Make inputs full width */
+    padding: 10px;
+    padding-left: 25px;
+    margin-bottom: 15px;
+    border: 1.5px solid #124C25; /* Match border color */
+    border-radius: 50px;
+    transition: border 0.3s;
+}
+
+input:focus {
+    border-color: #2AB157; /* Change border color on focus */
+}
+
+button {
+    width: 40%; /* Full width button */
+    min-height: 60px;
+    background-color: #124C25; /* Button background color */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 20px;
+    font-weight: bold;
+}
+.button-container {
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center the button horizontally */
+    margin-top: 20px; /* Optional: add some space above the button */
+}
+
+button:hover {
+    background-color: #0e3c1c; /* Darker shade on hover */
+}
+
+.footer {
+    margin-top: 20px;
+    font-size: 0.9em; /* Slightly smaller font */
+}
+
+.footer a {
+    color: #124C25;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline; /* Underline link on hover */
+}
