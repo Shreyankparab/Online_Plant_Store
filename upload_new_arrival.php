@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Handle Image 1 Upload
     $image_1 = $_FILES['new_arrival_image_1'];
     $image_1_name = uniqid() . "_" . basename($image_1['name']);
-    $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/Project_Web_Dev_new/uploads/new_arrivals/";
+    $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/Project_Web_Dev_Original/uploads/new_arrivals/";
     $target_file_1 = $target_dir . $image_1_name;
 
     // Handle Image 2 Upload
@@ -34,8 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($image_info_1 === false || $image_info_2 === false) {
         echo "Error: One or both files are not valid images.";
-    } elseif (($image_info_1[0] > 1500 || $image_info_1[1] > 1500) || ($image_info_2[0] > 1500 || $image_info_2[1] > 1500)) {
-        echo "Error: Image dimensions should not exceed 1500x1500 pixels.";
     } else {
         // Proceed with file uploads if both images are valid
         if (move_uploaded_file($image_1['tmp_name'], $target_file_1) && move_uploaded_file($image_2['tmp_name'], $target_file_2)) {
