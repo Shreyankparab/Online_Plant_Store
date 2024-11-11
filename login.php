@@ -1,46 +1,41 @@
 <?php
 session_start();
-
-// Database connection
-$conn = new mysqli('localhost', 'root', '1234', 'online_plant_store');
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    // Check for Admin login
-    if ($username === 'Admin@123' && $password === 'Admin@123') {
-        $_SESSION['user_id'] = 'admin';
-        header("Location: admin.php"); // Redirect to admin.php if credentials match
-        exit();
-    }
-
-    // Check for regular user login
-    $stmt = $conn->prepare("SELECT id, password FROM users WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($id, $hashed_password);
-        $stmt->fetch();
-
-        if (password_verify($password, $hashed_password)) {
-            $_SESSION['user_id'] = $id;
-            header("Location: index.php"); // Redirect to index.php on successful login
-            exit();
-        } else {
-            echo "Invalid username or password!";
-        }
-    } else {
-        echo "No user found with that username!";
-    }
-
-    $stmt->close();
-}
-$conn->close();
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Plant Store - Login</title>
+    <link rel="stylesheet" href="css/reglogstyle.css">
+    <script>
+        // Check if there's an error parameter in the URL
+        <?php
+        if (isset($_GET['error'])) {
+            $error_message = htmlspecialchars($_GET['error']);
+            echo "alert('$error_message');";  // Trigger JavaScript alert with the error message
+        }
+        ?>
+    </script>
+</head>
+<body>
+    <div class="background-image"></div> <!-- Background image -->
+
+    <div class="form-container">
+        <h1>Login</h1>
+
+        <form action="login_handler.php" method="POST">
+            <input type="text" name="username" placeholder="Enter your username or email" required>
+            <input type="password" name="password" placeholder="Enter your password" required>
+            <div class="button-container">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+        
+        <div class="footer">
+            <p>Don't have an account? <a href="registration.php">Register here</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

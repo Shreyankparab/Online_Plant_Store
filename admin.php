@@ -15,6 +15,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] !== 'admin') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/adminstyle.css">
 </head>
 <body>
@@ -26,7 +27,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] !== 'admin') {
     <!-- Existing Plant Upload Section -->
     <section>
         <h2>Welcome, Admin!</h2>
-        <p>Here you can manage the Online Plant Store. Use the form below to add new plants to the store.</p>
+        <br>
+        <!-- <p>Here you can manage the Online Plant Store. Use the form below to add new plants to the store.</p> -->
     </section>
     
     <!-- Image Upload Form for Plants -->

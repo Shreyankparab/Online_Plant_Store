@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.html");
+    header("Location: login.php");
     exit();
 }
 
@@ -41,24 +41,41 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <header class="header">
-        <div class="header_logo">
-            <img src="images/Logo_Main_1.png" alt="Online Plant Store Logo" style="width: 150px; height: auto;">
+<header class="header">
+    <div class="header_logo">
+        <img src="images/Logo_Main_1.png" alt="Online Plant Store Logo" style="width: 150px; height: auto;">
+    </div>
+    <div class="header_data">
+        <div class="Home-Header" onclick="scrollToSection('home-section')">Home</div>  
+        <div class="New-Arrivals-Header" onclick="scrollToSection('new-arrivals-section')">New Arrivals</div>    
+        <div class="Contact-Us-Header" onclick="scrollToSection('contact-us-section')">Contact Us</div>    
+        <div class="About-Us-Header" onclick="scrollToSection('about-us-section')">About Us</div>
+        <div class="Cart-Header">
+            <a href="mycart.php">
+                <img src="images/cart-icon.png" alt="Cart Icon" style="width: 25px; height: auto;">
+            </a>
         </div>
-        <div class="header_data">
-            <div class="Home-Header">Home</div>  
-            <div class="New-Arrivals-Header">New Arrivals</div>    
-            <div class="Contact-Us-Header">Contact Us</div>    
-            <div class="About-Us-Header">About Us</div>    
-          </div>
-          <div class="hamburger-icon" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </header>
 
-    <div class="container">
+    </div>
+
+    <div class="hamburger-icon" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</header>
+    <!-- =========================================Javascript for Navigation================================================ -->
+        <script>
+            function scrollToSection(sectionId) {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        </script>
+    <!-- ================================================================================================================== -->
+
+    <div id="home-section" class="container">
         <div id="carouselExampleIndicators" class="carousel slide slider" data-bs-ride="carousel" data-interval="1000">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -112,28 +129,51 @@ $conn->close();
         </div>
 
 
-            <div class="category">
-                <?php
-                if ($plantResult->num_rows > 0) {
-                    while ($plant = $plantResult->fetch_assoc()) {
-                        ?>
-                        <div class="category-item">
-                            <img src="uploads/<?php echo htmlspecialchars($plant['image']); ?>" alt="<?php echo htmlspecialchars($plant['name']); ?>" class="category-image">
-                            <h4><?php echo htmlspecialchars($plant['name']); ?></h4>
-                            <p class="card-description"><?php echo htmlspecialchars($plant['description']); ?></p>
-                            <p class="card-price">₹<?php echo htmlspecialchars($plant['price']); ?></p>
-                            <div class="button-container">
-                                <button class="add-to-cart">Add to Cart</button>
-                                <!-- <button class="buy-now">Buy Now</button> -->
-                            </div>
+        <div class="category">
+            <?php
+            if ($plantResult->num_rows > 0) {
+                while ($plant = $plantResult->fetch_assoc()) {
+                    ?>
+                    <div class="category-item">
+                        <img src="uploads/<?php echo htmlspecialchars($plant['image']); ?>" alt="<?php echo htmlspecialchars($plant['name']); ?>" class="category-image">
+                        <h4><?php echo htmlspecialchars($plant['name']); ?></h4>
+                        <p class="card-description"><?php echo htmlspecialchars($plant['description']); ?></p>
+                        <p class="card-price">₹<?php echo htmlspecialchars($plant['price']); ?></p>
+                        <div class="button-container">
+                            <button class="add-to-cart" onclick="addToCart('<?php echo $plant['id']; ?>', '<?php echo $plant['name']; ?>', '<?php echo $plant['image']; ?>', '<?php echo $plant['price']; ?>')">Add to Cart</button>
                         </div>
-                        <?php
-                    }
-                } else {
-                    echo "<p>No plants available at the moment.</p>";
+                    </div>
+                    <?php
                 }
-                ?>
-            </div>
+            } else {
+                echo "<p>No plants available at the moment.</p>";
+            }
+            ?>
+        </div>
+
+
+
+        <script>
+        function addToCart(id, name, image, price) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "add_to_cart.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    alert("Item added to cart successfully!");
+                } else {
+                    alert("Failed to add item to cart.");
+                }
+            };
+            const params = `id=${id}&name=${encodeURIComponent(name)}&image=${encodeURIComponent(image)}&price=${price}`;
+            xhr.send(params);
+        }
+        </script>
+
+
+
+
+
         </div>
                 <!-- ===================Retrive Images From Database====================== -->
                 <?php
@@ -180,7 +220,7 @@ $conn->close();
 
 
 
-                <div class="new_arrival_1">
+                <div id="new-arrivals-section" class="new_arrival_1">
             <div class="temp-card-text">
                 <h3 class="styled-heading">Book Covers</h3>
             </div>
@@ -206,7 +246,7 @@ $conn->close();
             </div>
         </div>
 
-        <div class="contact_info">
+        <div id="contact-us-section" class="contact_info">
             <div class="temp-card-text">
                     <h3 class="styled-heading">Contact Us</h3>
                 </div>
@@ -233,7 +273,7 @@ $conn->close();
             </div>
         </div>
 
-        <div class="footer">Footer</div>
+        <div id="about-us-section" class="footer">Footer</div>
     </div>
 </body>
 </html>
